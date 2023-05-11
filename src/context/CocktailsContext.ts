@@ -6,7 +6,9 @@ interface CocktailsContextProps {
   cocktails: CocktailType[];
   handleModalClick: () => void;
   cocktailModal: boolean;
-  handleCocktelIdClick: (v: string) => void;
+  handleCocktailInfo: (v: string | null) => void;
+  cocktailInfo: CocktailType;
+  addFavCocktail: (v: string) => void;
 }
 
 const CocktailsContext = createContext<CocktailsContextProps>(

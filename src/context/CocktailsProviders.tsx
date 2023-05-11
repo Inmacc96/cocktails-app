@@ -10,38 +10,16 @@ interface CocktailsProviderProps {
 const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
   const [cocktails, setCocktails] = useState<CocktailType[]>([]);
   const [cocktailModal, setCocktailModal] = useState(false);
-  const [cocktailId, setCocktailId] = useState("");
-
-  useEffect(() => {
-    const getInfoCocktail = async () => {
-      if (!cocktailId) return;
-
-      try {
-        const response = await fetch(`${API_URL}/lookup.php?i=${cocktailId}`);
-        const data = await response.json();
-        console.log(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getInfoCocktail();
-  }, [cocktailId]);
+  const [cocktailInfo, setCocktailInfo] = useState<CocktailType>(
+    {} as CocktailType
+  );
+  const [cocktailsFavs, setCocktailFavs] = useState<CocktailType[]>([]);
 
   const searchCocktails = async (cocktailName: string) => {
     try {
       const response = await fetch(`${API_URL}/search.php?s=${cocktailName}`);
       const data: ResponseAPISearchCocktails = await response.json();
-      const cocktailsMapped: CocktailType[] = data.drinks
-        .map((drink) => {
-          const { idDrink: id, strDrink: name, strDrinkThumb: image } = drink;
-          if (id !== null && name !== null) {
-            return { id, name, image };
-          } else {
-            return null;
-          }
-        })
-        .filter((cocktail) => cocktail !== null) as CocktailType[];
-      setCocktails(cocktailsMapped);
+      setCocktails(data.drinks);
     } catch (err) {
       console.log(err);
     }
@@ -51,8 +29,19 @@ const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
     setCocktailModal(!cocktailModal);
   };
 
-  const handleCocktelIdClick = (id: string) => {
-    setCocktailId(id);
+  const handleCocktailInfo = (id: string | null) => {
+    if (!id) return;
+    const cocktailInfoSelect = cocktails.filter(
+      (cocktail) => cocktail.idDrink === id
+    )[0];
+    setCocktailInfo(cocktailInfoSelect);
+  };
+
+  const addFavCocktail = (id: string) => {
+    const cocktailFav = cocktails.filter((cocktail) => cocktail.id === id);
+    if (!cocktailsFavs.includes(cocktailFav[0])) {
+      setCocktailFavs([...cocktailsFavs, cocktailFav[0]]);
+    }
   };
 
   return (
@@ -62,7 +51,9 @@ const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
         cocktails,
         cocktailModal,
         handleModalClick,
-        handleCocktelIdClick,
+        handleCocktailInfo,
+        cocktailInfo,
+        addFavCocktail,
       }}
     >
       {children}
