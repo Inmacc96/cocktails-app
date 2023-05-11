@@ -10,7 +10,7 @@ const CocktailModal = () => {
     for (let i = 1; i < 16; i++) {
       if (cocktailInfo[`strIngredient${i}`]) {
         ingredients.push(
-          <li key={idDrink}>
+          <li key={i}>
             {cocktailInfo[`strIngredient${i}`]} -{" "}
             {cocktailInfo[`strMeasure${i}`]}
           </li>
