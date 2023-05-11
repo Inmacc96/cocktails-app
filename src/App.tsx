@@ -5,7 +5,7 @@ import SearchCocktails from "./components/SearchCocktails";
 import useCocktails from "./hooks/useCocktails";
 
 function App() {
-  const { cocktailModal, loading } = useCocktails();
+  const { cocktailModal, loading, cocktails } = useCocktails();
   return (
     <>
       <header className="pl-5 py-5 text-white bg-red-400">
@@ -16,7 +16,13 @@ function App() {
         <section>
           <SearchCocktails />
 
-          {loading ? <p>Loading...</p> : <CocktailsList />}
+          {loading ? (
+            <p className="font-medium text-center">Loading...</p>
+          ) : cocktails ? (
+            <CocktailsList />
+          ) : (
+            <p className="font-medium text-center">No results found</p>
+          )}
         </section>
         <section>
           <CocktailsFavs />
