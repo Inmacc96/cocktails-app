@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { API_URL } from "../constants";
 import { CocktailType, ResponseAPISearchCocktails } from "../types/cocktails";
 import CocktailsContext from "./CocktailsContext";
@@ -13,8 +13,23 @@ const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
   const [cocktailInfo, setCocktailInfo] = useState<CocktailType>(
     {} as CocktailType
   );
-  const [cocktailsFavs, setCocktailFavs] = useState<CocktailType[]>([]);
+  const [cocktailsFavs, setCocktailFavs] = useState<CocktailType[]>(
+    JSON.parse(localStorage.getItem("cocktailsFavs") as string) ?? []
+  );
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const getLS = () => {
+      const cocktails =
+        JSON.parse(localStorage.getItem("cocktailsFavs") as string) ?? [];
+      setCocktailFavs(cocktails);
+    };
+    getLS();
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("cocktailsFavs", JSON.stringify(cocktailsFavs));
+  }, [cocktailsFavs]);
 
   const searchCocktails = async (cocktailName: string) => {
     setLoading(true);
@@ -74,7 +89,7 @@ const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
         addFavCocktail,
         cocktailsFavs,
         loading,
-        deleteFavCocktail
+        deleteFavCocktail,
       }}
     >
       {children}
