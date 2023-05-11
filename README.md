@@ -37,7 +37,7 @@ Finally, you will have the page at http://localhost:5183/.
 
 ### :package: Deployment
 
-- [Heroku](https://www.heroku.com)
+- [Netflify](https://www.netlify.com/)
 
 ## :link: Links
 
