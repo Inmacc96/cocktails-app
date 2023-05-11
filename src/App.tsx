@@ -1,11 +1,13 @@
 import CocktailModal from "./components/CocktailModal";
 import CocktailsFavs from "./components/CocktailsFavs";
 import CocktailsList from "./components/CocktailsList";
+import ConfirmDeleteModal from "./components/ConfirmDeleteModal";
 import SearchCocktails from "./components/SearchCocktails";
 import useCocktails from "./hooks/useCocktails";
 
 function App() {
-  const { cocktailModal, loading, cocktails } = useCocktails();
+  const { cocktailModal, loading, cocktails, confirmDeleteCocktail } =
+    useCocktails();
   return (
     <>
       <header className="pl-5 py-5 text-white bg-red-400">
@@ -30,6 +32,7 @@ function App() {
       </main>
 
       {cocktailModal && <CocktailModal />}
+      {confirmDeleteCocktail && <ConfirmDeleteModal />}
     </>
   );
 }

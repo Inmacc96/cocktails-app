@@ -12,6 +12,10 @@ interface CocktailsContextProps {
   cocktailsFavs: CocktailType[];
   loading: boolean;
   deleteFavCocktail: (v: string | null) => void;
+  confirmDeleteCocktail: boolean;
+  handleModalConfirmDeleteCocktail: () => void;
+  updateIdCocktailDeleted: (v: string | null) => void;
+  idCocktailDeleted: string;
 }
 
 const CocktailsContext = createContext<CocktailsContextProps>(

@@ -7,8 +7,12 @@ type CocktailFavProps = {
 
 const CocktailFav = ({ cocktail }: CocktailFavProps) => {
   const { strDrink, idDrink } = cocktail;
-  const { handleModalClick, handleCocktailInfo, deleteFavCocktail } =
-    useCocktails();
+  const {
+    handleModalClick,
+    handleCocktailInfo,
+    handleModalConfirmDeleteCocktail,
+    updateIdCocktailDeleted,
+  } = useCocktails();
 
   const handleClick = () => {
     handleModalClick();
@@ -16,7 +20,8 @@ const CocktailFav = ({ cocktail }: CocktailFavProps) => {
   };
 
   const handleClickDelete = () => {
-    deleteFavCocktail(idDrink);
+    handleModalConfirmDeleteCocktail();
+    updateIdCocktailDeleted(idDrink);
   };
 
   return (

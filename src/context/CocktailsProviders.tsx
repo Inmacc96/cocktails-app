@@ -17,6 +17,8 @@ const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
     JSON.parse(localStorage.getItem("cocktailsFavs") as string) ?? []
   );
   const [loading, setLoading] = useState(false);
+  const [confirmDeleteCocktail, setConfirmDeleteCocktail] = useState(false);
+  const [idCocktailDeleted, setIdCocktailDeleted] = useState("");
 
   useEffect(() => {
     const getLS = () => {
@@ -77,6 +79,14 @@ const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
     setCocktailFavs(cocktailsFavsUpdated);
   };
 
+  const handleModalConfirmDeleteCocktail = () => {
+    setConfirmDeleteCocktail(!confirmDeleteCocktail);
+  };
+
+  const updateIdCocktailDeleted = (id: string | null) => {
+    if (!id) return;
+    setIdCocktailDeleted(id);
+  };
   return (
     <CocktailsContext.Provider
       value={{
@@ -90,6 +100,10 @@ const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
         cocktailsFavs,
         loading,
         deleteFavCocktail,
+        confirmDeleteCocktail,
+        handleModalConfirmDeleteCocktail,
+        updateIdCocktailDeleted,
+        idCocktailDeleted,
       }}
     >
       {children}
