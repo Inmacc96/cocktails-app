@@ -1,16 +1,23 @@
 import { useState } from "react";
+import useCocktails from "../hooks/useCocktails";
 
 const SearchCocktails = () => {
   const [cocktailName, setCocktailName] = useState("");
   const [alert, setAlert] = useState("");
+  const { searchCocktails } = useCocktails();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     //Validación
     if (cocktailName === "") {
       setAlert("Please enter a cocktail name");
+      return;
     }
+    setAlert("");
+
+    //Peticion fetch y guardar en el estado
+    searchCocktails(cocktailName);
   };
 
   return (
