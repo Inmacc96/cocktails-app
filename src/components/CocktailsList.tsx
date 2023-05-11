@@ -7,7 +7,7 @@ const CocktailsList = () => {
   return (
     <div className="grid grid-cols-3 gap-6">
       {cocktails.map((cocktail) => {
-        return <Cocktail key={cocktail.id} cocktail={cocktail} />;
+        return <Cocktail key={cocktail.idDrink} cocktail={cocktail} />;
       })}
     </div>
   );

@@ -3,7 +3,6 @@ export interface ResponseAPISearchCocktails {
 }
 
 export interface CocktailType {
-  id: string;
-  name: string;
-  image: string | null;
+  [key: string]: null | string;
 }
+
