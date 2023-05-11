@@ -4,10 +4,8 @@ Technical test for a Frontend Developer position at Xoborg Technologies
 
 - [Introduction](#rocket-introduction)
 - [Usage](#wrench-usage)
-  - [Environment variables](#pagefacingup-environment-variables)
 - [Built with](#hammer-built-with)
   - [Frontend](#computer-frontend)
-  - [Backend](#gear-backend)
   - [Deploy](#package-deployment)
 - [Links](#link-links)
 - [Author](#woman-author)
