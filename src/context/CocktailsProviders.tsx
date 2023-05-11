@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { API_URL } from "../constants";
-import { Cocktail, ResponseAPISearchCocktails } from "../types/cocktails";
+import { CocktailType, ResponseAPISearchCocktails } from "../types/cocktails";
 import CocktailsContext from "./CocktailsContext";
 
 interface CocktailsProviderProps {
@@ -8,13 +8,13 @@ interface CocktailsProviderProps {
 }
 
 const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
-  const [cocktails, setCocktails] = useState<Cocktail[]>([]);
+  const [cocktails, setCocktails] = useState<CocktailType[]>([]);
 
   const searchCocktails = async (cocktailName: string) => {
     try {
       const response = await fetch(`${API_URL}/search.php?s=${cocktailName}`);
       const data: ResponseAPISearchCocktails = await response.json();
-      const cocktailsMapped: Cocktail[] = data.drinks
+      const cocktailsMapped: CocktailType[] = data.drinks
         .map((drink) => {
           const { idDrink: id, strDrink: name, strDrinkThumb: image } = drink;
           if (id !== null && name !== null) {
@@ -23,7 +23,7 @@ const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
             return null;
           }
         })
-        .filter((cocktail) => cocktail !== null) as Cocktail[];
+        .filter((cocktail) => cocktail !== null) as CocktailType[];
       setCocktails(cocktailsMapped);
     } catch (err) {
       console.log(err);

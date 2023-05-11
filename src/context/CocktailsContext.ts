@@ -1,9 +1,9 @@
 import { createContext } from "react";
-import { Cocktail } from "../types/cocktails";
+import { CocktailType } from "../types/cocktails";
 
 interface CocktailsContextProps {
   searchCocktails: (v: string) => void;
-  cocktails: Cocktail[]
+  cocktails: CocktailType[]
 }
 
 const CocktailsContext = createContext<CocktailsContextProps>(
