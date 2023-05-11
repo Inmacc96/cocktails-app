@@ -54,6 +54,14 @@ const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
     }
   };
 
+  const deleteFavCocktail = (id: string | null) => {
+    if (!id) return;
+    const cocktailsFavsUpdated = cocktailsFavs.filter(
+      (cocktail) => cocktail.idDrink !== id
+    );
+    setCocktailFavs(cocktailsFavsUpdated);
+  };
+
   return (
     <CocktailsContext.Provider
       value={{
@@ -66,6 +74,7 @@ const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
         addFavCocktail,
         cocktailsFavs,
         loading,
+        deleteFavCocktail
       }}
     >
       {children}

@@ -8,7 +8,7 @@ const CocktailsFavs = () => {
     <>
       <h2 className="text-xl font-semibold mb-10">Favourites Cocktails</h2>
 
-      <div className="w-full">
+      <div className="flex flex-col gap-4">
         {cocktailsFavs.map((cocktail) => {
           return (
             <CocktailFav

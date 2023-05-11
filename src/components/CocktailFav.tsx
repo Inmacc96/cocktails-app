@@ -7,7 +7,8 @@ type CocktailFavProps = {
 
 const CocktailFav = ({ cocktail }: CocktailFavProps) => {
   const { strDrink, idDrink } = cocktail;
-  const { handleModalClick, handleCocktailInfo } = useCocktails();
+  const { handleModalClick, handleCocktailInfo, deleteFavCocktail } =
+    useCocktails();
 
   const handleClick = () => {
     handleModalClick();
@@ -15,11 +16,11 @@ const CocktailFav = ({ cocktail }: CocktailFavProps) => {
   };
 
   const handleClickDelete = () => {
-    console.log("delete...");
+    deleteFavCocktail(idDrink);
   };
 
   return (
-    <article className="rounded-md border border-gray-300 flex justify-between items-center py-2 px-4">
+    <article className="w-full rounded-md border border-gray-300 flex justify-between items-center py-2 px-4">
       <p className="text-lg font-semibold my-3">{strDrink}</p>
       <div className="flex gap-3 justify-center items-center">
         <button
