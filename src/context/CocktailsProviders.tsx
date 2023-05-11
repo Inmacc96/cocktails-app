@@ -9,6 +9,7 @@ interface CocktailsProviderProps {
 
 const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
   const [cocktails, setCocktails] = useState<CocktailType[]>([]);
+  const [cocktailModal, setCocktailModal] = useState(false);
 
   const searchCocktails = async (cocktailName: string) => {
     try {
@@ -30,8 +31,14 @@ const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
     }
   };
 
+  const handleModalClick = () => {
+    setCocktailModal(!cocktailModal);
+  };
+
   return (
-    <CocktailsContext.Provider value={{ searchCocktails, cocktails }}>
+    <CocktailsContext.Provider
+      value={{ searchCocktails, cocktails, cocktailModal, handleModalClick }}
+    >
       {children}
     </CocktailsContext.Provider>
   );

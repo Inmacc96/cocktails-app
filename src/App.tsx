@@ -1,7 +1,10 @@
+import CocktailModal from "./components/CocktailModal";
 import CocktailsList from "./components/CocktailsList";
 import SearchCocktails from "./components/SearchCocktails";
+import useCocktails from "./hooks/useCocktails";
 
 function App() {
+  const { cocktailModal } = useCocktails();
   return (
     <>
       <header className="pl-5 py-5 text-white bg-red-400">
@@ -18,6 +21,8 @@ function App() {
           <p>My favourites cocktails</p>
         </section>
       </main>
+
+      {cocktailModal && <CocktailModal />}
     </>
   );
 }

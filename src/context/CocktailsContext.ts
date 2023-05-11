@@ -3,7 +3,9 @@ import { CocktailType } from "../types/cocktails";
 
 interface CocktailsContextProps {
   searchCocktails: (v: string) => void;
-  cocktails: CocktailType[]
+  cocktails: CocktailType[];
+  handleModalClick: () => void;
+  cocktailModal: boolean;
 }
 
 const CocktailsContext = createContext<CocktailsContextProps>(
