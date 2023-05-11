@@ -3,15 +3,16 @@ import useCocktails from "../hooks/useCocktails";
 const CocktailModal = () => {
   const { cocktailInfo, handleModalClick, addFavCocktail } = useCocktails();
 
-  const { strDrink, strDrinkThumb, strInstructions } = cocktailInfo;
+  const { idDrink, strDrink, strDrinkThumb, strInstructions } = cocktailInfo;
 
   const showIngredients = () => {
     const ingredients = [];
     for (let i = 1; i < 16; i++) {
       if (cocktailInfo[`strIngredient${i}`]) {
         ingredients.push(
-          <li>
-            {cocktailInfo[`strIngredient${i}`]} - {cocktailInfo[`strMeasure${i}`]}
+          <li key={idDrink}>
+            {cocktailInfo[`strIngredient${i}`]} -{" "}
+            {cocktailInfo[`strMeasure${i}`]}
           </li>
         );
       }
@@ -20,7 +21,8 @@ const CocktailModal = () => {
   };
 
   const handleClick = () => {
-    addFavCocktail("1");
+    addFavCocktail(idDrink);
+    handleModalClick();
   };
   return (
     <div className="z-10 fixed top-0 left-0 h-screen w-screen flex items-center justify-center bg-gray-400 bg-opacity-50">

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { API_URL } from "../constants";
 import { CocktailType, ResponseAPISearchCocktails } from "../types/cocktails";
 import CocktailsContext from "./CocktailsContext";
@@ -14,14 +14,18 @@ const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
     {} as CocktailType
   );
   const [cocktailsFavs, setCocktailFavs] = useState<CocktailType[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const searchCocktails = async (cocktailName: string) => {
+    setLoading(true);
     try {
       const response = await fetch(`${API_URL}/search.php?s=${cocktailName}`);
       const data: ResponseAPISearchCocktails = await response.json();
       setCocktails(data.drinks);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -37,9 +41,15 @@ const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
     setCocktailInfo(cocktailInfoSelect);
   };
 
-  const addFavCocktail = (id: string) => {
-    const cocktailFav = cocktails.filter((cocktail) => cocktail.id === id);
-    if (!cocktailsFavs.includes(cocktailFav[0])) {
+  const addFavCocktail = (id: string | null) => {
+    if (!id) return;
+    const cocktailFav = cocktails.filter((cocktail) => cocktail.idDrink === id);
+
+    if (
+      !cocktailsFavs.find(
+        (cocktail) => cocktail.idDrink === cocktailFav[0].idDrink
+      )
+    ) {
       setCocktailFavs([...cocktailsFavs, cocktailFav[0]]);
     }
   };
@@ -54,6 +64,8 @@ const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
         handleCocktailInfo,
         cocktailInfo,
         addFavCocktail,
+        cocktailsFavs,
+        loading,
       }}
     >
       {children}
