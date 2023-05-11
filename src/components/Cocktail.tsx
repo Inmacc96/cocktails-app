@@ -5,11 +5,12 @@ type CocktailProps = {
   cocktail: CocktailType;
 };
 const Cocktail = ({ cocktail }: CocktailProps) => {
-  const { name, image } = cocktail;
-  const { handleModalClick } = useCocktails();
+  const { id, name, image } = cocktail;
+  const { handleModalClick, handleCocktelIdClick } = useCocktails();
 
   const handleClick = () => {
     handleModalClick();
+    handleCocktelIdClick(id);
   };
 
   return (

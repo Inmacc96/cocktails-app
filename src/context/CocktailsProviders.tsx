@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { API_URL } from "../constants";
 import { CocktailType, ResponseAPISearchCocktails } from "../types/cocktails";
 import CocktailsContext from "./CocktailsContext";
@@ -10,6 +10,22 @@ interface CocktailsProviderProps {
 const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
   const [cocktails, setCocktails] = useState<CocktailType[]>([]);
   const [cocktailModal, setCocktailModal] = useState(false);
+  const [cocktailId, setCocktailId] = useState("");
+
+  useEffect(() => {
+    const getInfoCocktail = async () => {
+      if (!cocktailId) return;
+
+      try {
+        const response = await fetch(`${API_URL}/lookup.php?i=${cocktailId}`);
+        const data = await response.json();
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getInfoCocktail();
+  }, [cocktailId]);
 
   const searchCocktails = async (cocktailName: string) => {
     try {
@@ -35,9 +51,19 @@ const CocktailsProvider = ({ children }: CocktailsProviderProps) => {
     setCocktailModal(!cocktailModal);
   };
 
+  const handleCocktelIdClick = (id: string) => {
+    setCocktailId(id);
+  };
+
   return (
     <CocktailsContext.Provider
-      value={{ searchCocktails, cocktails, cocktailModal, handleModalClick }}
+      value={{
+        searchCocktails,
+        cocktails,
+        cocktailModal,
+        handleModalClick,
+        handleCocktelIdClick,
+      }}
     >
       {children}
     </CocktailsContext.Provider>
